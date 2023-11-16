@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using BusinessLogic.Logic;
+using BusinessLogic.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace API
 {
@@ -19,6 +21,10 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<MarketDbContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            });
             services.AddTransient<IProductRepostitory, ProductRepository>();
             services.AddControllers();
         }
