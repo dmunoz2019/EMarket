@@ -1,0 +1,29 @@
+[
+  {
+    "Name": "Samsung Galaxy S21",
+    "Description": "Flagship smartphone with a stunning display",
+    "Price": 799.99,
+    "PictureUrl": "s21.jpg",
+    "Stock": 100,
+    "ProductBrandId": 1,
+    "ProductCategoryId": 1
+  },
+  {
+    "Name": "Apple MacBook Air",
+    "Description": "Thin and lightweight laptop for everyday use",
+    "Price": 999.99,
+    "PictureUrl": "macbook_air.jpg",
+    "Stock": 50,
+    "ProductBrandId": 2,
+    "ProductCategoryId": 2
+  },
+  {
+    "Name": "Sony WH-1000XM4",
+    "Description": "Wireless noise-canceling headphones for immersive audio",
+    "Price": 349.99,
+    "PictureUrl": "wh1000xm4.jpg",
+    "Stock": 200,
+    "ProductBrandId": 3,
+    "ProductCategoryId": 3
+  }
+]

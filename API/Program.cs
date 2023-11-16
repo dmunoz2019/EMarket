@@ -1,4 +1,5 @@
 ﻿using BusinessLogic.Data;
+using BusinessLogic.Data.Load;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +22,7 @@ public class Program
             {
                 var context = services.GetRequiredService<MarketDbContext>();
                await  context.Database.MigrateAsync();
+                await LoadDbContextData.LoadDataAsync(context, loggerFactory);
             }
             catch (Exception ex)
             {
