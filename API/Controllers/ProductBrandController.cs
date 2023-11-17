@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductBrandController : ControllerBase
+   
+    public class ProductBrandController : BaseApiController
     {
         private readonly IGenericRepository<ProductBrand> _repo;
 

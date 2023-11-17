@@ -22,6 +22,7 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddDbContext<MarketDbContext>(options =>
@@ -40,6 +41,7 @@ namespace API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStatusCodePagesWithReExecute("/errors", "?code={0}");
 
             app.UseRouting();
             app.UseAuthorization();

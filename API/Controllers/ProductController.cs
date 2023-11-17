@@ -1,4 +1,5 @@
 ﻿using API.Dtos;
+using API.Errors;
 using AutoMapper;
 using BusinessLogic.Logic;
 using Core.Entities;
@@ -11,9 +12,8 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ProductController : ControllerBase
+   
+    public class ProductController : BaseApiController
     {
         private readonly IGenericRepository<Product> _repo;
 
@@ -31,15 +31,19 @@ namespace API.Controllers
         public async Task<ActionResult<List<Product>>> GetProducts()
         {
             var products = await _repo.GetAllWithSpec(new ProductCategoryBrand());
+
             return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDTO>>(products));
+
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}")]   
         public async Task<ActionResult<ProductDTO>> GetProduct(int id)
         {
 
             var product = await _repo.GetByIdWithSpec(new ProductCategoryBrand(id));
-             return _mapper.Map<Product, ProductDTO>(product);
+            if (product == null) return NotFound(new CodeErrorResponse(404, "El producto No existe"));
+
+            return _mapper.Map<Product, ProductDTO>(product);
            
         }
 
