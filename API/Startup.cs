@@ -7,6 +7,7 @@ using Microsoft.Extensions.Hosting;
 using BusinessLogic.Logic;
 using BusinessLogic.Data;
 using Microsoft.EntityFrameworkCore;
+using API.Dtos;
 
 namespace API
 {
@@ -21,6 +22,7 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(MappingProfiles));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddDbContext<MarketDbContext>(options =>
             {
