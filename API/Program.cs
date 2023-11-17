@@ -20,9 +20,9 @@ public class Program
             var loggerFactory = services.GetRequiredService<ILoggerFactory>();
             try
             {
-                var context = services.GetRequiredService<MarketDbContext>();
+               var context = services.GetRequiredService<MarketDbContext>();
                await  context.Database.MigrateAsync();
-                await LoadDbContextData.LoadDataAsync(context, loggerFactory);
+               await LoadDbContextData.LoadDataAsync(context, loggerFactory);
             }
             catch (Exception ex)
             {

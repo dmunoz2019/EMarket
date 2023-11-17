@@ -1,4 +1,4 @@
-﻿using Core.Interfaces;
+﻿    using Core.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,11 +21,14 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddDbContext<MarketDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddTransient<IProductRepostitory, ProductRepository>();
+            services.AddTransient<IProductBrandRepostitory, ProductBrandRepository>();
+            services.AddTransient<IProductCategoryRepostitory, ProductCategoryRepository>();
             services.AddControllers();
         }
 
