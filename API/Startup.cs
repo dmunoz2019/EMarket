@@ -29,6 +29,12 @@ namespace API
             {
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+
+            services.AddDbContext<SecurityDbContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
+            });
+
             services.AddTransient<IProductRepostitory, ProductRepository>();
             services.AddTransient<IProductBrandRepostitory, ProductBrandRepository>();
             services.AddTransient<IProductCategoryRepostitory, ProductCategoryRepository>();
