@@ -4,6 +4,7 @@ using BusinessLogic.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BusinessLogic.Identity.Migrations
 {
     [DbContext(typeof(SecurityDbContext))]
-    partial class SecurityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231119122248_UpdateUserIdToString")]
+    partial class UpdateUserIdToString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -57,9 +59,6 @@ namespace BusinessLogic.Identity.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Zipcode")
                         .HasColumnType("nvarchar(max)");
 
@@ -68,8 +67,6 @@ namespace BusinessLogic.Identity.Migrations
                     b.HasIndex("UserId")
                         .IsUnique()
                         .HasFilter("[UserId] IS NOT NULL");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Address");
                 });
@@ -82,7 +79,7 @@ namespace BusinessLogic.Identity.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int?>("AddressId")
+                    b.Property<int>("AddressId")
                         .HasColumnType("int");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -290,10 +287,6 @@ namespace BusinessLogic.Identity.Migrations
                         .WithOne("Address")
                         .HasForeignKey("Core.Entities.Address", "UserId");
 
-                    b.HasOne("Core.Entities.User", null)
-                        .WithMany("Addresses")
-                        .HasForeignKey("UserId1");
-
                     b.Navigation("User");
                 });
 
@@ -351,8 +344,6 @@ namespace BusinessLogic.Identity.Migrations
             modelBuilder.Entity("Core.Entities.User", b =>
                 {
                     b.Navigation("Address");
-
-                    b.Navigation("Addresses");
                 });
 #pragma warning restore 612, 618
         }

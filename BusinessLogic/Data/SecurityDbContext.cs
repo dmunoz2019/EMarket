@@ -20,6 +20,14 @@ namespace BusinessLogic.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<User>()
+                .HasOne(u => u.Address)
+                .WithOne(a => a.User)
+                .HasForeignKey<Address>(a => a.UserId);
+
+               
+     
+
         }
     }
 }

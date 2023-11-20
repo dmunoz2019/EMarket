@@ -74,5 +74,10 @@ namespace BusinessLogic.Logic
             _context.Set<T>().Remove(entity);
             return _context.SaveChangesAsync();
         }
+
+        public async Task<int> CountAsync(ISpecification<T> spec)
+        {
+            return await ApplySpecification(spec).CountAsync();
+        }
     }
 }

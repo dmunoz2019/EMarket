@@ -14,6 +14,7 @@ namespace Core.Entities
         public string LastName { get; set; }
         public Address? Address { get; set; }
 
-        public string address { get; set; }
+        public int? AddressId { get; set; }
+        public IReadOnlyList<Address> Addresses { get; set; }
     }
 }

@@ -22,5 +22,7 @@ namespace Core.Interfaces
 
         // Delete operation
         Task DeleteAsync(T entity);
+
+        Task<int> CountAsync(ISpecification<T> spec);
     }
 }

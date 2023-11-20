@@ -8,6 +8,7 @@ using Core.Specifications;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Security;
 using System.Threading.Tasks;
 
 namespace API.Controllers
@@ -24,9 +25,9 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductDTO>>> GetProducts()
+        public async Task<ActionResult<List<ProductDTO>>> GetProducts([FromQuery]ProductSpecificationParams productSpecificationParams)
         {
-            var products = await _repo.GetAllWithSpec(new ProductCategoryBrand());
+            var products = await _repo.GetAllWithSpec(new ProductCategoryBrand(productSpecificationParams));
             return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDTO>>(products));
         }
 
