@@ -11,8 +11,11 @@ namespace Core.Interfaces
         // Read operations
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> GetAllAsync();
+
         Task<T> GetByIdWithSpec(ISpecification<T> spec);
         Task<IReadOnlyList<T>> GetAllWithSpec(ISpecification<T> spec);
+
+       
 
         // Create operation
         Task<T> AddAsync(T entity);
@@ -24,5 +27,6 @@ namespace Core.Interfaces
         Task DeleteAsync(T entity);
 
         Task<int> CountAsync(ISpecification<T> spec);
+        Task<IReadOnlyList<T>> GetAllWithSpecAsync(ISpecification<T> spec);
     }
 }

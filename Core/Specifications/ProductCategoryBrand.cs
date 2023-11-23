@@ -10,7 +10,9 @@ namespace Core.Specifications
     public  class ProductCategoryBrand : BaseSpecification<Product>
     {
         public ProductCategoryBrand(ProductSpecificationParams productParams)
-            : base( x => (!productParams.BrandId.HasValue || x.ProductBrandId == productParams.BrandId) &&
+            : base( x => 
+            (string.IsNullOrEmpty(productParams.Search) || x.Name.ToLower().Contains(productParams.Search)) &&
+            (!productParams.BrandId.HasValue || x.ProductBrandId == productParams.BrandId) &&
                         (!productParams.BrandId.HasValue || x.ProductCategoryId == productParams.BrandId)
             ) 
         { 

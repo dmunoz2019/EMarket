@@ -7,6 +7,7 @@ using Core.Interfaces;
 using Core.Specifications;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Security;
 using System.Threading.Tasks;
@@ -25,11 +26,26 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ProductDTO>>> GetProducts([FromQuery]ProductSpecificationParams productSpecificationParams)
+        public async Task<ActionResult<Pagination<ProductDTO>>> GetProducts([FromQuery] ProductSpecificationParams productSpecificationParams)
         {
-            var products = await _repo.GetAllWithSpec(new ProductCategoryBrand(productSpecificationParams));
-            return Ok(_mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDTO>>(products));
+            var spec = new ProductCategoryBrand(productSpecificationParams);
+
+            // Ensure asynchronous execution
+            var products = await _repo.GetAllWithSpecAsync(spec); // Assuming you have an async version of this method
+
+            var countSpec = new ProductForCountingSpecifications(productSpecificationParams);
+
+            // Async execution for counting
+            var totalItems = await _repo.CountAsync(countSpec);
+
+            var totalPages = (int)Math.Ceiling((double)totalItems / productSpecificationParams.PageSize);
+
+            // Mapping operation
+            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductDTO>>(products);
+
+            return Ok(new Pagination<ProductDTO>(productSpecificationParams.PageIndex, productSpecificationParams.PageSize, totalItems, data, totalPages));
         }
+
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ProductDTO>> GetProduct(int id)
