@@ -5,6 +5,7 @@ using BusinessLogic.Logic;
 using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -25,6 +26,8 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<Pagination<ProductDTO>>> GetProducts([FromQuery] ProductSpecificationParams productSpecificationParams)
         {

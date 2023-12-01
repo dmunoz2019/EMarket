@@ -48,6 +48,8 @@ namespace API.Controllers
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginDto.Password, false);
 
+
+
             if(result.Succeeded)
             {
                 return new UserDTO
@@ -61,6 +63,18 @@ namespace API.Controllers
             return Unauthorized( new CodeErrorResponse(401, result.ToString()));
         }
 
+        [HttpPost("logout")]
+        public async Task<ActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return Ok(
+
+                new CodeErrorResponse(200, "Logout successful")
+                
+                );
+        }
+
+
         [HttpPost("register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDto)
         {
@@ -71,7 +85,10 @@ namespace API.Controllers
             {
                 DisplayName = registerDto.DisplayName,
                 Email = registerDto.Email,
-                UserName = registerDto.Username
+                UserName = registerDto.Username,
+                FirstName = registerDto.FirstName,
+                LastName = registerDto.LastName,
+                
             };
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
@@ -83,7 +100,9 @@ namespace API.Controllers
                     DisplayName = user.DisplayName,
                     Token = _tokenService.CreateToken(user),
                     Email = user.Email,
-                    Username = user.UserName
+                    Username = user.UserName,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName
 
                 };
             }

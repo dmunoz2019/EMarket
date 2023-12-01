@@ -36,7 +36,7 @@ namespace BusinessLogic.Logic
             {
 
                 Subject = new System.Security.Claims.ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddDays(7),
+                Expires = DateTime.Now.AddDays(1),
                 SigningCredentials = creds,
                 Issuer = _config["Token:Issuer"],
                 Audience = _config["Token:Audience"]

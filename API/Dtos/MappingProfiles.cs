@@ -11,6 +11,7 @@ namespace API.Dtos
                 .ForMember(d => d.Category, o => o.MapFrom(s => s.ProductCategory.Name));
 
             CreateMap<Core.Entities.Address, AddressDTO>().ReverseMap();
+
         }
     }
 }

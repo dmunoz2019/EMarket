@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using StackExchange.Redis;
 
 namespace API
 {
@@ -27,6 +28,7 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddScoped<ITokenService, TokenService>();
             var builder = services.AddIdentityCore<User>();
 
@@ -45,7 +47,10 @@ namespace API
                         ValidateIssuer = true,
                         ValidateAudience = false
                     };
-                });
+                }
+                
+                );
+
 
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
@@ -57,6 +62,13 @@ namespace API
             services.AddDbContext<SecurityDbContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("IdentityConnection"));
+            });
+
+            services.AddSingleton<ConnectionMultiplexer>(c =>
+            {
+                var x = ConfigurationOptions.Parse(configuration: configuration.GetConnectionString("Redis"), true);
+
+                return ConnectionMultiplexer.Connect(x);
             });
 
             services.AddTransient<IProductRepostitory, ProductRepository>();
@@ -88,6 +100,7 @@ namespace API
             app.UseCors("CorsPolicy");
 
             app.UseAuthentication();
+
 
             app.UseAuthorization();
 
